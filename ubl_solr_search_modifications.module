@@ -1,0 +1,47 @@
+<?php
+
+/**
+ * @file
+ * ubl_solr_search_modifications
+ *
+ *
+ *  Copyright 2017 Leiden University Library
+ *
+ *  This file is part of ubl_solr_search_modifications.
+ *
+ *  ubl_solr_search_modifications is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
+define('UBLSSM_RELS_EXT_HASMODEL_SOLR_FIELD', 'RELS_EXT_hasModel_uri_ms');
+define('UBLSSM_ISLANDORA_COLLECTION_CMODEL', '"info:fedora/islandora:collectionCModel"');
+define('UBLSSM_RELS_EXT_HASMODEL_COLLECTION', UBLSSM_RELS_EXT_HASMODEL_SOLR_FIELD . ':' . UBLSSM_ISLANDORA_COLLECTION_CMODEL);
+
+/**
+ * Implements hook_islandora_solr_query($islandora_solr_query).
+ */
+function ubl_solr_search_modifications_islandora_solr_query($islandora_solr_query) {
+  $solr_fqs = $islandora_solr_query->solrParams['fq'];
+  $is_search_for_collections = FALSE;
+  foreach ($solr_fqs as $solr_fq) {
+    $real_fq = preg_replace('/\\\(\/|:)/', '\1', $solr_fq);
+    if ($real_fq === UBLSSM_RELS_EXT_HASMODEL_COLLECTION) {
+      $is_search_for_collections = TRUE;
+      break;
+    }
+  }
+  if (!$is_search_for_collections) {
+    $islandora_solr_query->solrParams['fq'][] = '-' . UBLSSM_RELS_EXT_HASMODEL_SOLR_FIELD . ':' . islandora_solr_lesser_escape(UBLSSM_ISLANDORA_COLLECTION_CMODEL); 
+  }
+}
