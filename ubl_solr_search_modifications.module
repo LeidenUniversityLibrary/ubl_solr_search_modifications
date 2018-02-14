@@ -53,7 +53,7 @@ function ubl_solr_search_modifications_islandora_solr_primary_display() {
   return array(
     'grid' => array(
       'name' => t('Alternative Grid'),
-      'module' => 'islandora_solr_config',
+      'module' => 'ubl_solr_search_modifications',
       'file' => 'includes/grid_results_alternative.inc',
       'class' => "IslandoraSolrResultsGridAlternative",
       'function' => "displayResults",
