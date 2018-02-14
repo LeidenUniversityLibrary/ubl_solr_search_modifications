@@ -42,6 +42,22 @@ function ubl_solr_search_modifications_islandora_solr_query($islandora_solr_quer
     }
   }
   if (!$is_search_for_collections) {
-    $islandora_solr_query->solrParams['fq'][] = '-' . UBLSSM_RELS_EXT_HASMODEL_SOLR_FIELD . ':' . islandora_solr_lesser_escape(UBLSSM_ISLANDORA_COLLECTION_CMODEL); 
+    $islandora_solr_query->solrParams['fq'][] = '-' . UBLSSM_RELS_EXT_HASMODEL_SOLR_FIELD . ':' . islandora_solr_lesser_escape(UBLSSM_ISLANDORA_COLLECTION_CMODEL);
   }
+}
+
+/**
+ * Implements hook_islandora_solr_primary_display().
+ */
+function ubl_solr_search_modifications_islandora_solr_primary_display() {
+  return array(
+    'grid' => array(
+      'name' => t('Alternative Grid'),
+      'module' => 'islandora_solr_config',
+      'file' => 'includes/grid_results_alternative.inc',
+      'class' => "IslandoraSolrResultsGridAlternative",
+      'function' => "displayResults",
+      'description' => t("Display search results as a grid view"),
+    ),
+  );
 }
