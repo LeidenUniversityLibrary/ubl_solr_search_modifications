@@ -51,7 +51,7 @@ function ubl_solr_search_modifications_islandora_solr_query($islandora_solr_quer
  */
 function ubl_solr_search_modifications_islandora_solr_primary_display() {
   return array(
-    'grid' => array(
+    'alternativegrid' => array(
       'name' => t('Alternative Grid'),
       'module' => 'ubl_solr_search_modifications',
       'file' => 'includes/grid_results_alternative.inc',
