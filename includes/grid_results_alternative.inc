@@ -23,6 +23,9 @@ class IslandoraSolrResultsGridAlternative extends IslandoraSolrResults {
    *   Rendered Solr results.
    */
   public function printResults($solr_results) {
+    $mod_path = drupal_get_path('module', 'islandora_solr_config');
+    drupal_add_css("$mod_path/css/islandora_solr_config.theme.css");
+    
     $solr_results = islandora_solr_prepare_solr_results($solr_results);
     $object_results = $solr_results['response']['objects'];
     $object_results = islandora_solr_prepare_solr_doc($object_results);
